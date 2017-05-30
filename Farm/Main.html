@@ -1,0 +1,30 @@
+﻿
+<div class="easyui-layout" style="width:100%;height:100%;" id="mainDiv">
+    <div data-options="region:'north'" style="height:50px">
+        <table style="width:100%;">
+            <tr>
+                <td id="wcmName" style="width:20%;">,欢迎登录！</td>
+                <td><h1 style="margin:5px;  ">上海光明荷斯坦牧业有限公司牧场管理系统</h1></td>
+            </tr>
+        </table>
+
+
+    </div>
+    <div data-options="region:'west',split:true" title="菜单" style="width:180px;">
+        <ul id="mainMenu" class="easyui-tree"></ul>
+    </div>
+    <div data-options="region:'center'">
+        <div id="centerTab" class="easyui-tabs" data-options="fit:true,border:false,plain:true">
+            <div id="treeIntro" title="公司组织架构简介" style="padding:10px">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){ 
+         loadMenu();
+         })
+
+</script>

@@ -1,0 +1,126 @@
+﻿<div class="easyui-panel" >
+    <form id="fmChkList" class="easyui-form" method="post">
+        <a href="#" id="dgSave" class="easyui-linkbutton" onclick="SaveChkListFG()" data-options="iconCls:'icon-save',plain:true">保存</a>
+        <a href="#" id="dgSearch" class="easyui-linkbutton" onclick="mySearch()" data-options="iconCls:'icon-search',plain:true">查找</a>
+        <a href="#" id="dgExport" class="easyui-linkbutton" onclick="exportExcel()" data-options="iconCls:'icon-export',plain:true">导出excel</a>
+        <a href="#" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">提交</a>
+        <a href="#" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">重置</a>
+        <table>
+            <tr>
+                <td><input class="easyui-textbox" readonly="readonly" name="ChkListId" style="width:100%" data-options="label:'检查表ID:'"></td>
+                <td><input class="easyui-textbox" name="ChkListNo" style="width:100%" data-options="label:'检查表编号:',required:true"></td>
+                <td><input class="easyui-textbox" name="ChkListDesc" style="width:300px" data-options="label:'检查表说明:'"></td>
+                <td><input class="easyui-textbox" name="OrganizeName" style="width:100%" data-options="label:'受检单位:',required:true" ></td>
+            </tr>
+            <tr>
+                <td><input class="easyui-datebox" name="CheckDate" style="width:100%"  required ="required" data-options="label:'检查日期:'"></td>
+                <td><input class="easyui-textbox" name="Checker" style="width:100%" data-options="label:'检查人:'"></td>
+                <td><input class="easyui-textbox" name="HostName" style="width:100%" data-options="label:'接待人:'"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="4"><input class="easyui-textbox" name="GRemark" style="width:100%" data-options="label:'总评:'"></td>
+            </tr>
+        </table>
+    </form>
+    <div style="text-align:center;padding:5px 0">
+
+    </div>
+</div>
+<!--<div id="dlgimg"class="easyui-dialog" style="display: none;">
+    <div id="showimg">    </div>
+    <div id="uploadimg" style="width:300px"></div>
+</div>-->
+<table id="dgChkListDtl" style="height:100%" rownumbers="true" >
+    <thead>
+        <tr>
+            <th data-options="field:'ChkListDtlId' " hidden="hidden">ID</th>
+            <th data-options="field:'ChkListId'" hidden="hidden">检查表ID</th>
+            <th data-options="field:'ChkListNo'" hidden="hidden">检查表编号</th>
+            <th data-options="field:'StdItemCode',align:'left'" width="120" >标准编号</th>
+            <th data-options="field:'ChkItem'" width="450" >检查项</th>
+            <th data-options="field:'ItemPoints'" hidden="hidden" width="80" editor="text">分值</th>
+            <th data-options="field:'ChkResult'" width="80" 
+                            editor="{type:'combobox',options:{valueField:'id',textField:'text',
+								data:resultList,required:true,panelHeight:'auto',width:'120'}}">检查结果</th>
+            <th data-options="field:'ChkScore'" hidden="hidden">得分</th>
+            <th data-options="field:'ItemCode'" width="140" hidden="hidden">检查项编号</th>
+            <th data-options="field:'CheckDate'" hidden="hidden">检查日期</th>
+            <th data-options="field:'CheckerRemark'" editor="text">检查意见</th>
+            <th data-options="field:'CorrectDdLine'" editor="text">整改日期</th>
+            <th data-options="field:'Importance'" width="80"
+                editor="{type:'combobox',options:{valueField:'id',textField:'text',
+								data:importanceList,panelHeight:'auto',required:true}}">重要性</th>
+            <th data-options="field:'ProblemPic'" width="180" 
+                editor="{type:'filebox',options:{buttonText:'选文件'}}" formatter=imgFormatter >问题照片</th>
+            <th data-options="field:'CreatePerson'"  editor="text">创建人</th>
+            <th data-options="field:'CreateDate'">创建日期</th>
+            <th data-options="field:'UpdatePerson'" hidden="hidden">更新人</th>
+            <th data-options="field:'UpdateDate'" hidden="hidden">更新日期</th>
+        </tr>
+    </thead>
+</table>
+
+<script>
+    $(document).ready(function () {
+        if (myPageId > 0) { fillData() } else {
+            $("#dgChkListDtl").datagrid()
+        }
+    });
+    var importanceList = [{ id: '普通', text: '普通' }, { id: '重要', text: '重要' }]
+    var resultList = [{ id: '合格', text: '合格' }, { id: '不合格', text: '不合格' }, { id: '不适用', text: '不适用' }, { id: '未检查', text: '未检查' }]
+    function imgFormatter(value, row, index) {
+        if (value != undefined) { return "<a href='\Content\images\db\ " + value + "'>浏览图片</a>"; }
+    }
+    //function showImg(img) {
+    //    $("#dialog").show();//必须先显示，再弹出
+    //    $("#dlgImg").dialog('open');
+    //    $("#showImg").attr("src", img);
+    //}
+    //function uploadImg(id) {
+    //    $("#dialog").show();//必须先显示，再弹出
+    //    $("#dlgImg").dialog('open');
+    //    $('#uploadImg').filebox({
+    //        buttonText: '选择文件',
+    //        buttonAlign: 'left'
+    //    })
+    //}
+    function fillData() {
+        $('#fmChkList').form('load', '/Handler/Login.ashx?action=formCheckList&id=' + myPageId);
+        $("#dgChkListDtl").datagrid({
+            view: scrollview,
+            pageSize: 15,
+            singleSelect: true,
+            onClickCell: onClickCell,
+            idField: 'ChkListDtlId',
+            checkOnSelect: false,
+            url: 'Handler/Login.ashx?action=gridCheckListDtl',
+            queryParams: {
+                fieldName: 'ChkListId',
+                fieldValue: myPageId
+            }
+        });
+        myPageId = 0
+    }
+
+    var myDG = $('#dgChkListDtl');
+    var saveUrl = "/Handler/cl/CheckListTemp.ashx?action=SaveItem"
+    function SaveChkListFG() {
+       $('#fmChkList').form('submit', {
+            url: 'line!saveBgLine.do',
+            onSubmit: function () {
+                return ($("#fmChkList").form("validate"))
+            },
+            success: function (data) {
+                var obj = jQuery.parseJSON(data);
+                if (obj.Success) {
+                    $.messager.alert('消息', '保存成功！');
+                } else {
+                    $.messager.alert('消息', '保存失败！');
+                }
+            }
+        });
+        Save()
+    }
+
+</script>

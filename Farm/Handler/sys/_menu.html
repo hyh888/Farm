@@ -1,0 +1,51 @@
+﻿
+    <div id="tbMenu">
+        <a href="#" id="dgSave" class="easyui-linkbutton" onclick="save()" data-options="iconCls:'icon-save',plain:true">保存</a>
+        <a href="#" id="dgDel" class="easyui-linkbutton" onclick="remove()" data-options="iconCls:'icon-remove',plain:true">删除</a>
+        <a href="#" id="dgAppend" class="easyui-linkbutton" onclick="append()" data-options="iconCls:'icon-add',plain:true">增加</a>
+        <a href="#" id="dgSearch" class="easyui-linkbutton" onclick="mySearch()" data-options="iconCls:'icon-search',plain:true">查找</a>
+        <a href="#" id="dgExport" class="easyui-linkbutton" onclick="exportExcel()" data-options="iconCls:'icon-export',plain:true">导出excel</a>
+        <a href="#" id="dgImport" class="easyui-linkbutton" onclick="importExcel()" data-options="iconCls:'icon-import',plain:true">excel导入</a>
+        <a href="#" id="dgUndo" class="easyui-linkbutton" onclick="reject()" data-options="iconCls:'icon-undo',plain:true">取消</a>
+    </div>
+    <table id="dgMenu" style="height:100%" rownumbers="false" toolbar="#tbMenu">
+        <thead>
+            <tr>
+                <th data-options="field:'MenuId'" hidden="hidden" width="80">ID</th>
+                <th data-options="field:'MenuCode'" width="80" editor="text">菜单编号</th>
+                <th data-options="field:'MenuName',align:'left'" width="80" editor="text">菜单名称</th>
+                <th data-options="field:'ParentCode'" width="80" editor="text">父菜单编号</th>
+                <th data-options="field:'URL'" width="120" editor="text">URL</th>
+                <!--<th data-options="field:'IconClass'" width="150" editor="text">图标类</th>
+                <th data-options="field:'IconURL'" editor="text">图标URL</th>-->
+                <th data-options="field:'IsEnable',align:'center',formatter:ReturnYN,editor:{type:'checkbox',options:{on:1,off:0}}" width="120">有效</th>
+                <th data-options="field:'MenuSeq'" width="120" editor="text">菜单顺序</th>
+                <th data-options="field:'Description'" width="120">描述</th>
+                <th data-options="field:'IsDel',align:'center',formatter:ReturnYN,editor:{type:'checkbox',options:{on:1,off:0}}" width="120">删除</th>
+                <th data-options="field:'CreatePerson'" width="120">创建人</th>
+                <th data-options="field:'CreateDate'" width="120">创建日期</th>
+                <th data-options="field:'UpdatePerson'" width="120">更新人</th>
+                <th data-options="field:'UpdateDate'" width="120">更新日期</th>
+
+            </tr>
+        </thead>
+    </table>
+
+    <script>
+        //$(document).ready(function () {
+            $("#dgMenu").datagrid({
+                onClickCell: onClickCell,
+                singleSelect: true,
+                idField: 'MenuId',
+                view: scrollview,
+                pageSize: 20,
+                url: 'Handler/Login.ashx?action=gridMenu'
+            });
+        //});
+
+
+        var myDG = $('#dgMenu');
+        var saveUrl = "/Handler/Login.ashx?action=SaveMenu"
+        var idColName = "MenuId"
+
+    </script>

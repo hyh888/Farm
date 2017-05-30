@@ -1,0 +1,50 @@
+﻿
+    <div id="tbOrg">
+        <a href="#" id="dgSave" class="easyui-linkbutton" onclick="save()" data-options="iconCls:'icon-save',plain:true">保存</a>
+        <a href="#" id="dgDel" class="easyui-linkbutton" onclick="del()" data-options="iconCls:'icon-remove',plain:true">删除</a>
+        <a href="#" id="dgSearch" class="easyui-linkbutton" onclick="mySearch()" data-options="iconCls:'icon-search',plain:true">查找</a>
+        <a href="#" id="dgExport" class="easyui-linkbutton" onclick="exportExcel()" data-options="iconCls:'icon-export',plain:true">导出excel</a>
+    </div>
+    <table id="dgOrg" style="height:100%"  toolbar="#tbOrg">
+        <thead>
+            <tr>
+                <!--<th data-options="field:'ck'" checkbox=true>Check</th>-->
+                <th data-options="field:'OrganizeId'" hidden="hidden">ID</th>
+                <th data-options="field:'OrganizeCode'" width="80" editor="text">组织编号</th>
+                <th data-options="field:'OrganizeName',align:'left'" width="180" editor="text">组织名称</th>
+                <th data-options="field:'ParentCode'" width="80" editor="text">父组织编号</th>
+                <th data-options="field:'Description'" width="120" editor="text">描述</th>
+               <th data-options="field:'IsEnable',align:'center',formatter:ReturnYN,editor:{type:'checkbox',options:{on:1,off:0}}" width="50">有效</th>
+                <th data-options="field:'IsDel',align:'center',formatter:ReturnYN,editor:{type:'checkbox',options:{on:1,off:0}}" width="50">可见</th>
+                <th data-options="field:'IsUnit',align:'center',formatter:ReturnYN,editor:{type:'checkbox',options:{on:1,off:0}}" width="50">是单位</th>
+                <th data-options="field:'SortNo'" width="30" editor="text">排序号</th>
+                <th data-options="field:'CreatePerson'" width="50">创建人</th>
+                <th data-options="field:'CreateDate'" width="150">创建日期</th>
+                <th data-options="field:'UpdatePerson'" width="50">更新人</th>
+                <th data-options="field:'UpdateDate'" width="150">更新日期</th>
+
+            </tr>
+        </thead>
+    </table>
+<script>
+  //  $(document).ready(function () {
+
+        $("#dgOrg").datagrid({
+            onClickCell: onClickCell,
+            singleSelect: true,
+            idField: 'OrganzieId',
+            checkOnSelect: false,
+            rownumbers: true,
+            view: scrollview,
+            pageSize: 20,
+            url: 'Handler/Login.ashx?action=gridOrg'
+        });
+//    });
+
+
+        var myDG = $('#dgOrg');
+        var saveUrl = "/Handler/Login.ashx?action=SaveOrg"
+        var idColName = "MenuId"
+
+</script>
+ 

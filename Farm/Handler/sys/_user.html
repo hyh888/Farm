@@ -1,0 +1,52 @@
+﻿
+    <div id="tbUser">
+        <a href="#" id="dgSave" class="easyui-linkbutton" onclick="save()" data-options="iconCls:'icon-save',plain:true">保存</a>
+        <a href="#" id="dgDel" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+        <a href="#" id="dgSearch" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查找</a>
+        <a href="#" id="dgExport" class="easyui-linkbutton" data-options="iconCls:'icon-export',plain:true">导出excel</a>
+    </div>
+    <table  id="dgUser" style="height:100%" rownumbers="true" toolbar="#tbMenu">
+        <thead>
+            <tr>
+                <th data-options="field:'UserId'" hidden="hidden">ID</th>
+                <th data-options="field:'UserCode'" width="80" editor="text">用户编号</th>
+                <th data-options="field:'UserName',align:'left'" width="80" editor="text">用户姓名</th>
+                <th data-options="field:'Password'" width="80" editor="text">密码</th>
+               <th data-options="field:'Description'" width="80">描述</th>
+                <th data-options="field:'OrganizeCode'" width="80" editor="text">组织代码</th>
+                <th data-options="field:'OrganizeName'" width="120" editor="text">组织名称</th>
+                <th data-options="field:'RoleName'" width="120" editor="text">角色</th>
+                <th data-options="field:'ConfigJSON'" width="150" editor="text">界面配置</th>
+                <th data-options="field:'LoginCount'" editor="text">登录次数</th>
+                <th data-options="field:'LastLoginDate'" width="100" editor="text">最后登录日期</th>
+                <th data-options="field:'IsEnable',align:'center',formatter:ReturnYN,editor:{type:'checkbox',options:{on:1,off:0}}" width="50">有效</th>
+                <th data-options="field:'IsDel',align:'center',formatter:ReturnYN,editor:{type:'checkbox',options:{on:1,off:0}}" width="50">可见</th>
+                <th data-options="field:'CreatePerson'" width="50">创建人</th>
+                <th data-options="field:'CreateDate'">创建日期</th>
+                <th data-options="field:'UpdatePerson'">更新人</th>
+                <th data-options="field:'UpdateDate'">更新日期</th>
+
+            </tr>
+        </thead>
+    </table>
+
+  <script>
+    $(document).ready(function () {
+
+        $("#dgUser").datagrid({
+            onClickCell: onClickCell,
+            singleSelect: true,
+            idField: 'UserId',
+            checkOnSelect: false,
+            view: scrollview,
+            pageSize: 20,
+            url: 'Handler/Login.ashx?action=gridUser'
+        });
+
+    });
+
+
+    var myDG = $('#dgUser');
+    var saveUrl = "/Handler/Login.ashx?action=SaveUser"
+ 
+</script>
